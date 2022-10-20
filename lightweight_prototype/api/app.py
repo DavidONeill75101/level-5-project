@@ -1,13 +1,17 @@
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 from data import Data
 import json
 
 application = Flask(__name__)
+cors = CORS(application)
+application.config["CORS_HEADERS"] = "Content-Type"
 
 current_data = Data()
 
 
 @application.route('/', methods=["GET"])
+@cross_origin()
 def root():
     instructions = {'get_collated': 'parameters - gene, cancer, drug, evidence_type, variant',
                     'get_sentences': 'parameter - matching_id',
@@ -17,6 +21,7 @@ def root():
 
 
 @application.route('/get_collated', methods=["GET"])
+@cross_origin()
 def get_collated():
 
     collated = current_data.collated_pd
@@ -41,10 +46,17 @@ def get_collated():
         collated = collated[collated['variant_group']
                             == request.args.get('variant').lower()]
 
+    if request.args.get('start') and request.args.get('end'):
+        collated = collated.iloc[int(request.args.get(
+            'start')):int(request.args.get('end'))]
+
+    collated = collated.fillna(" ")
+
     return json.dumps(collated.to_dict("records"))
 
 
 @application.route('/get_sentences', methods=["GET"])
+@cross_origin()
 def get_sentences():
 
     parameters = request.args
@@ -57,5 +69,6 @@ def get_sentences():
 
 
 @application.route('/get_unfiltered', methods=["GET"])
+@cross_origin()
 def get_unfiltered():
     return json.dumps(current_data.unfiltered_pd.to_dict("records"))

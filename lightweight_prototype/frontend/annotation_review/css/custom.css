@@ -1,0 +1,125 @@
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important; 
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.flagtime {
+	color: #AAAAAA
+}
+
+.flagtime:hover {
+	color: #666666
+}
+
+.sharetime {
+	opacity: 0.7;
+}
+
+.sharetime:hover {
+	opacity: 1.0;
+}
+
+.flex {
+	display: flex;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.columnchevron {
+	color: #DDDDDD
+}
+
+.hoverwhite:hover {
+	color: #FFFFFF
+}
+
+.columnchevron:hover {
+	color: #666666
+}
+
+.columnchevron-active {
+	color: #FFFFFF
+}
+
+.columnchevron-active:hover {
+	color: #CCCCCC
+}
+
+.columnchevron-selected {
+	color: #FFFFFF
+}
+
+.columnchevron-selected:hover {
+	color: #FFFFFF
+}
+
+.columnselector-selected {
+	color: #ffffff;
+	background-color: #6bd3e3;
+}
+
+.modal-90w {
+	width: 96%;
+	max-width: 2000px;
+}
+
+@media (min-width: 576px) {
+	.modal-90w {
+		width: 90%;
+		max-width: 2000px;
+	}
+}
+
+.card-body-table {
+	flex: 1 1 auto;
+	padding: 0.5rem;
+}
+
+@media (min-width: 992px) {
+	.card-body-table {
+		flex: 1 1 auto;
+		padding: 1.25rem;
+	}
+}
+
+.titlepadding {
+	padding-left: 0.75em;
+	padding-right: 0.75em;
+}
+
+@media (min-width: 992px) {
+	.titlepadding {
+		padding-left: 0em;
+		padding-right: 0em;
+	}
+}
+
+.quarter_then_half_then_full_col {
+  position: relative;
+  width: 100%;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+@media (min-width: 900px) {
+  .quarter_then_half_then_full_col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .quarter_then_half_then_full_col {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
