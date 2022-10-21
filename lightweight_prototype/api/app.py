@@ -27,6 +27,10 @@ def get_collated():
 
     collated = current_data.collated_pd
 
+    if request.args.get('matching_id'):
+        collated = collated[collated['matching_id']
+                            == request.args.get('matching_id')]
+
     if request.args.get('gene'):
         collated = collated[collated['gene_normalized'] == request.args.get(
             'gene').upper()]
@@ -66,6 +70,12 @@ def get_sentences():
     else:
         matching_id = request.args.get("matching_id")
         sentences = current_data.sentences_pd[current_data.sentences_pd['matching_id'] == matching_id]
+
+        if request.args.get('start') and request.args.get('end'):
+            sentences = sentences.iloc[int(request.args.get(
+                'start')):int(request.args.get('end'))]
+
+        sentences = sentences.fillna(" ")
         return json.dumps(sentences.to_dict("records"))
 
 
@@ -90,9 +100,9 @@ def upvote_sentence():
         return "Need to specify sentence id"
 
 
-@application.route('/upvote_sentence', methods=['GET'])
+@application.route('/downvote_sentence', methods=['GET'])
 @cross_origin()
-def upvote_sentence():
+def downvote_sentence():
 
     if request.args.get("id"):
         ids = [int(request.args.get("id"))]
