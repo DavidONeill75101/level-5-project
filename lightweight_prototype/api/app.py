@@ -1,3 +1,4 @@
+from xmlrpc.client import APPLICATION_ERROR
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from data import Data
@@ -72,3 +73,37 @@ def get_sentences():
 @cross_origin()
 def get_unfiltered():
     return json.dumps(current_data.unfiltered_pd.to_dict("records"))
+
+
+@application.route('/upvote_sentence', methods=['GET'])
+@cross_origin()
+def upvote_sentence():
+
+    if request.args.get("id"):
+        ids = [int(request.args.get("id"))]
+        current_data.sentences_pd.loc[current_data.sentences_pd.id.isin(
+            ids), 'upvotes'] += 1
+
+        return "Upvoted"
+
+    else:
+        return "Need to specify sentence id"
+
+
+@application.route('/upvote_sentence', methods=['GET'])
+@cross_origin()
+def upvote_sentence():
+
+    if request.args.get("id"):
+        ids = [int(request.args.get("id"))]
+        current_data.sentences_pd.loc[current_data.sentences_pd.id.isin(
+            ids), 'downvotes'] += 1
+
+        return "Downvoted"
+
+    else:
+        return "Need to specify sentence id"
+
+
+if __name__ == "__main__":
+    application.run(debug=True)
