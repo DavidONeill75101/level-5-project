@@ -115,5 +115,39 @@ def downvote_sentence():
         return "Need to specify sentence id"
 
 
+@application.route('/get_genes', methods=['GET'])
+@cross_origin()
+def get_genes():
+    lowercase_genes = sorted(
+        current_data.collated_pd['gene_normalized'].str.lower().unique())
+    uppercase_genes = [
+        l.upper() if 'mir' not in l else l for l in lowercase_genes]
+    return uppercase_genes
+
+
+@application.route('/get_cancers', methods=['GET'])
+@cross_origin()
+def get_cancers():
+    return sorted(current_data.collated_pd['cancer_normalized'].str.lower().unique())
+
+
+@application.route('/get_drugs', methods=['GET'])
+@cross_origin()
+def get_drugs():
+    return sorted(current_data.collated_pd['drug_normalized'].dropna().unique(), key=lambda x: x.lower())
+
+
+@application.route('/get_evidence_types', methods=['GET'])
+@cross_origin()
+def get_evidence_types():
+    return sorted(current_data.collated_pd['evidencetype'].unique())
+
+
+@application.route('/get_variants', methods=['GET'])
+@cross_origin()
+def get_variants():
+    return sorted(current_data.collated_pd['variant_group'].dropna().unique())
+
+
 if __name__ == "__main__":
     application.run(debug=True)
